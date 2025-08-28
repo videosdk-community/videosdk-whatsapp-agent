@@ -1,0 +1,11 @@
+version: "1.0"
+deployment:
+  id: YOUR_DEPLOYMENT_ID
+  entry:
+    path: main.py
+
+deploy:
+  cloud: true
+
+secrets:
+  VIDEOSDK_AUTH_TOKEN: YOUR_VIDEOSDK_AUTH_TOKEN
