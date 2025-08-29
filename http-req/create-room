@@ -1,0 +1,3 @@
+POST https://api.videosdk.live/v2/rooms
+Authorization: VIDEOSDK_TOKEN
+Content-Type: application/json
