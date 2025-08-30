@@ -27,7 +27,7 @@ Before you begin, ensure you have the following:
 
 - **Python 3.12+**
 - **Docker** installed and running on your local machine.
-- A **VideoSDK Account**. [Sign up here](https://videosdk.live/).
+- A **VideoSDK Account**. [Sign up here](https://app.videosdk.live/).
 - A [**Twilio Account**](https://console.twilio.com) with a phone number that is approved for WhatsApp Business.
 - A [**Google AI Studio API Key**](https://aistudio.google.com/app/apikey) for the Gemini model.
 
