@@ -1,11 +1,12 @@
 version: "1.0"
 deployment:
-  id: YOUR_DEPLOYMENT_ID
+  id: DEPLOYMENT_ID
   entry:
-    path: main.py
-
+    path: ./main.py
+  signaling_base_url: api.videosdk.live
+env:
+  path: ./.env
+secrets:
+  VIDEOSDK_AUTH_TOKEN: VIDEOSDK_AUTH_TOKEN
 deploy:
   cloud: true
-
-secrets:
-  VIDEOSDK_AUTH_TOKEN: YOUR_VIDEOSDK_AUTH_TOKEN

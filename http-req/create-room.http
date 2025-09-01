@@ -1,3 +1,3 @@
 POST https://api.videosdk.live/v2/rooms
-Authorization: VIDEOSDK_TOKEN
+Authorization: {{$dotenv VIDEOSDK_AUTH_TOKEN}}
 Content-Type: application/json

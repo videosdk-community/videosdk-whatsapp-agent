@@ -1,8 +1,8 @@
 POST https://api.videosdk.live/ai/v1/ai-deployments
-Authorization: VIDEOSDK_TOKEN
+Authorization: {{$dotenv VIDEOSDK_AUTH_TOKEN}}
 Content-Type: application/json
 
 {
-    "name": "Whatsapp AI Agent",
+    "name": "whatsapp_ai_agent",
     "description":"AI Telephony Agents - Inbound/Outbound Calls"
 }

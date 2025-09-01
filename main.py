@@ -1,42 +1,35 @@
-import asyncio
+import asyncio, os
 from videosdk.agents import Agent, AgentSession, RealTimePipeline, JobContext, RoomOptions, WorkerJob
 from videosdk.plugins.google import GeminiRealtime, GeminiLiveConfig
-from dotenv import load_dotenv
-import os
 
-load_dotenv(override=True)
 
-# Agent Component
 class MyVoiceAgent(Agent):
     def __init__(self):
-        super().__init__(
-            instructions="You are an agent that can help students with their studies and answer their questions. You are a female, and you have a feminine voice. You help them understand the topic of the video / recorded video and be a great study assistant., keep answer in 1-2 lines, not more than that",
-        )
-
-    async def on_enter(self) -> None:
-        await self.session.say("Hello, how can I help you today?")
+        super().__init__(instructions="You are a helpful voice assistant that can answer questions and help with tasks.")
+    async def on_enter(self): await self.session.say("Hello! How can I help?")
+    async def on_exit(self): await self.session.say("Goodbye!")
     
-    async def on_exit(self) -> None:
-        await self.session.say("Goodbye, see you soon!")
-
-# Job Entrypoint
+    
 async def start_session(context: JobContext):
-    
-
+    # Initialize Model
     model = GeminiRealtime(
         model="gemini-2.0-flash-live-001",
-        api_key="", 
+        api_key=os.getenv("GOOGLE_API_KEY"), 
         config=GeminiLiveConfig(           
-            voice="Leda",
+            voice="Leda", # Puck, Charon, Kore, Fenrir, Aoede, Leda, Orus, and Zephyr.
             response_modalities=["AUDIO"]
         )
     )
 
-    pipeline = RealTimePipeline(model=model)
+
+    # Create pipeline
+    pipeline = RealTimePipeline(
+        model=model
+    )
 
     session = AgentSession(
         agent=MyVoiceAgent(),
-        pipeline=pipeline,
+        pipeline=pipeline
     )
 
     try:
@@ -44,19 +37,20 @@ async def start_session(context: JobContext):
         await session.start()
         await asyncio.Event().wait()
     finally:
+        # Clean up resources when done
         await session.close()
         await context.shutdown()
 
 def make_context() -> JobContext:
     room_options = RoomOptions(
-        auth_token=os.getenv("VIDEOSDK_TOKEN"),
-        room_id=os.getenv("VIDEOSDK_ROOM_ID"),
-        name="AI Agent",
-        playground=False,
-        recording=False
+        room_id=os.getenv(""),
+        auth_token=os.getenv("VIDEOSDK_AUTH_TOKEN"),
+        name="VideoSDK Realtime Agent",
+        playground=True
     )
+
     return JobContext(room_options=room_options)
 
 if __name__ == "__main__":
     job = WorkerJob(entrypoint=start_session, jobctx=make_context)
-    job.start() 
+    job.start()
